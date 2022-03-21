@@ -2,7 +2,6 @@ import React, { useRef } from 'react';
 import Walls from './Walls';
 import Roof from './Roof';
 import Door from './Door';
-import Bushes from './Bushes';
 
 const House = (props) => {
   const ref = useRef();
@@ -12,7 +11,7 @@ const House = (props) => {
       <Walls />
       <Roof />
       <Door/>
-      <Bushes/>
+      <pointLight args={["#ff7dd6", 1, 7]} position={[0, 2.2, 2.7]}/>
     </group>
   );
 }
