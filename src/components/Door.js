@@ -1,4 +1,4 @@
-import React, {useRef} from 'react'
+import React, { useRef } from 'react'
 import { useLoader } from '@react-three/fiber'
 import { TextureLoader } from 'three/src/loaders/TextureLoader'
 import * as THREE from 'three';
@@ -15,16 +15,16 @@ export default function Door(props) {
   const geomRef = useRef()
 
   React.useLayoutEffect(() => {
-     if(geomRef.current){
-       geomRef.current.setAttribute("uv2", new THREE.BufferAttribute(geomRef.current.attributes.uv.array, 2))
-     }
+    if (geomRef.current) {
+      geomRef.current.setAttribute("uv2", new THREE.BufferAttribute(geomRef.current.attributes.uv.array, 2))
+    }
   }, [])
 
 
   return (
-    <mesh 
+    <mesh
       {...props} position={[0, 0.9, 2.01]}>
-      <planeGeometry ref={geomRef} args={[2, 2]} />
+      <planeGeometry ref={geomRef} args={[2, 2, 100, 100]} />
       <meshStandardMaterial map={doorColorTexture} transparent alphaMap={doorAlphaTexture} aoMap={doorAmbientOcclusionTexture} displacementMap={doorHeightTexture} displacementScale={0.1} normalMap={doorNormalTexture} metalnessMap={doorMetalnessTexture} roughnessMap={doorRoughnessTexture} />
     </mesh>
   )
