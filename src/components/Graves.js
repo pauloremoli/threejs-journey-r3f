@@ -1,7 +1,5 @@
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
-import { useLoader } from '@react-three/fiber'
+import { useGLTF } from '@react-three/drei';
 import { Suspense, useRef } from 'react';
-import { useGLTF } from '@react-three/drei'
 
 
 function Grave({ ...props }) {
@@ -23,7 +21,7 @@ function Grave({ ...props }) {
 
 const Graves = (props) => {
     let graves = [];
-    for (let index = 0; index < 20; index++) {
+    for (let index = 0; index < 40; index++) {
         const angle = Math.random() * Math.PI * 2;
         const radius = 3.2 + Math.random() * 6;
         const x = Math.sin(angle) * radius;

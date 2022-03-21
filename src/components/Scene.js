@@ -5,6 +5,7 @@ import Plane from './Plane';
 import House from './House';
 import Bushes from './Bushes';
 import Graves from './Graves';
+import Ghosts from './Ghosts';
 
 const Scene = () => {
   const { size, gl } = useThree();
@@ -25,6 +26,7 @@ const Scene = () => {
         <OrbitControls enableDamping />
         <PerspectiveCamera makeDefault position={[4, 2, 5]} fov={75} aspect={size.width / size.height} near={0.1} far={100} />
         <fog args={["#262837", 1, 15]} attach="fog" />
+        <Ghosts/>
       </Suspense>
     </>
   );
