@@ -6,6 +6,8 @@ import House from "./House";
 import Bushes from "./Bushes";
 import Graves from "./Graves";
 import Ghosts from "./Ghosts";
+import * as THREE from "three";
+
 
 const Scene = () => {
   const { size, gl } = useThree();
@@ -13,6 +15,7 @@ const Scene = () => {
     gl.setClearColor("#262837");
     gl.setSize(size.width, size.height);
     gl.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    gl.shadowMap.type = THREE.PCFSoftShadowMap;
   }, [gl, size]);
 
   return (
