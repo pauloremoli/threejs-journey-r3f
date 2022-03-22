@@ -11,7 +11,7 @@ const House = (props) => {
       <Walls />
       <Roof />
       <Door/>
-      <pointLight args={["#ff7d46", 1, 7]} position={[0, 2.2, 2.7]}/>
+      <pointLight args={["#ff7d46", 1, 7]} position={[0, 2.2, 2.7]} castShadow/>
     </group>
   );
 }
