@@ -9,13 +9,13 @@ function Ghosts() {
   useFrame(({ clock }) => {
     const elapsedTime = clock.getElapsedTime();
     const ghost1Angle = elapsedTime * 0.5;
-    ghost1Ref.current.position.x = Math.cos(ghost1Angle) * 4;
-    ghost1Ref.current.position.y = Math.sin(ghost1Angle) * 4;
+    ghost1Ref.current.position.x = Math.cos(ghost1Angle) * 6;
+    ghost1Ref.current.position.y = Math.sin(ghost1Angle) * 2;
     ghost1Ref.current.position.z = Math.sin(ghost1Angle) * 3;
 
     const ghost2Angle = -elapsedTime * 0.32;
     ghost2Ref.current.position.x = Math.cos(ghost2Angle) * 5;
-    ghost2Ref.current.position.y = Math.sin(ghost2Angle) * 5;
+    ghost2Ref.current.position.y = Math.sin(ghost2Angle) * 2;
     ghost2Ref.current.position.z =
       Math.sin(ghost2Angle) * 4 * Math.sin(elapsedTime * 2.5);
 
@@ -32,7 +32,7 @@ function Ghosts() {
     <>
       <pointLight
         ref={ghost1Ref}
-        args={["yellow", 2, 3]}
+        args={["green", 2, 3]}
         castShadow
         shadow-mapSize-height={512}
         shadow-mapSize-width={512}

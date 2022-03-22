@@ -35,7 +35,7 @@ const Graves = (props) => {
     graves.push(
       <Grave
         key={index}
-        scale={0.2}
+        scale={0.14}
         position={[x, -0.25, z]}
         rotation={[0, rotationY, rotationZ]}
       />
