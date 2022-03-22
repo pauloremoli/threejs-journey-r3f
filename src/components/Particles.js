@@ -1,7 +1,7 @@
 import { useLoader, useFrame } from "@react-three/fiber";
 import React, { useRef } from "react";
-import { TextureLoader } from 'three/src/loaders/TextureLoader'
-import {AdditiveBlending} from "three";
+import { TextureLoader } from "three/src/loaders/TextureLoader";
+import { AdditiveBlending } from "three";
 
 function Particles() {
   const pointsRef = useRef();
@@ -18,20 +18,18 @@ function Particles() {
   }
 
   useFrame(({ clock }) => {
-
     for (let i = 0; i < vertices.length; i++) {
       const i3 = i * 3;
-      const x = positionRef.current.array[ i3 ];
-      positionRef.current.array[ i3 + 1] =  Math.sin(x + clock.getElapsedTime());
+      const x = positionRef.current.array[i3];
+      positionRef.current.array[i3 + 1] = Math.sin(x + clock.getElapsedTime());
     }
     positionRef.current.needsUpdate = true;
-
-  })
+  });
 
   return (
     <points ref={pointsRef}>
-      <bufferGeometry attach="geometry" >
-      <bufferAttribute
+      <bufferGeometry attach="geometry">
+        <bufferAttribute
           attachObject={["attributes", "position"]}
           count={vertices.length / 3}
           array={vertices}
@@ -45,7 +43,15 @@ function Particles() {
           itemSize={3}
         />
       </bufferGeometry>
-      <pointsMaterial vertexColors={true} blending={AdditiveBlending} depthWrite={false} transparent={true} size={0.1} sizeAttenuation={true} alphaMap={starTexture}/>
+      <pointsMaterial
+        vertexColors={true}
+        blending={AdditiveBlending}
+        depthWrite={false}
+        transparent={true}
+        size={0.1}
+        sizeAttenuation={true}
+        alphaMap={starTexture}
+      />
     </points>
   );
 }
