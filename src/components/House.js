@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
-import Walls from './Walls';
-import Roof from './Roof';
 import Door from './Door';
+import Roof from './Roof';
+import Walls from './Walls';
 
 const House = (props) => {
   const ref = useRef();

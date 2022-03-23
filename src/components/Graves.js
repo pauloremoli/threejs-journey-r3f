@@ -3,7 +3,7 @@ import { useRef } from "react";
 
 function Grave({ ...props }) {
   const group = useRef();
-  const { nodes, materials } = useGLTF("/scene.gltf");
+  const { nodes, materials } = useGLTF("/grave/scene.gltf");
   return (
     <group ref={group} {...props} dispose={null} >
       <group rotation={[-Math.PI / 2, 0, 0]}>

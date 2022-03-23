@@ -6,8 +6,9 @@ import House from "./House";
 import Bushes from "./Bushes";
 import Graves from "./Graves";
 import Ghosts from "./Ghosts";
+import Ghost from "./Ghost";
+import Statue from "./Statue";
 import * as THREE from "three";
-
 
 const Scene = () => {
   const { size, gl } = useThree();
@@ -45,6 +46,8 @@ const Scene = () => {
         />
         <fog args={["#262837", 1, 15]} attach="fog" />
         <Ghosts />
+        <Ghost />
+        <Statue position={[2, -0.2, -5]} scale={[0.5, 0.5, 0.5]} />
       </Suspense>
     </>
   );
