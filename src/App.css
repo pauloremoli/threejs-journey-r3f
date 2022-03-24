@@ -1,11 +1,13 @@
-div
-{
-  width: 100vw;
-  height: 100vh;
-}
-
-.canvas {
+body,
+html,
+#root {
   width: 100%;
   height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+canvas {
   background-color: black;
 }
