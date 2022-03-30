@@ -1,7 +1,7 @@
 import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
 import { useThree } from "@react-three/fiber";
 import React, { Suspense } from "react";
-import Fox from "./Fox";
+import Burguer from "./Burguer";
 
 const Scene = () => {
   const { size } = useThree();
@@ -24,7 +24,7 @@ const Scene = () => {
       />
 
       <Suspense fallback={null}>
-        <Fox />
+        <Burguer />
       </Suspense>
     </>
   );
