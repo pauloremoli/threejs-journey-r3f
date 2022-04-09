@@ -1,3 +1,4 @@
+import { useControls } from "leva";
 import { useMemo, useRef } from "react";
 import { useFrame } from "react-three-fiber";
 import { Vector2 } from "three";
@@ -26,6 +27,9 @@ const fragmentShader = `
 `;
 
 const Plane = () => {
+  
+  const { uFrequency } = useControls({  uFrequency: {x: 10, y: 5 }})
+
   const ref = useRef();
 
   const data = useMemo(
@@ -33,10 +37,10 @@ const Plane = () => {
       fragmentShader,
       vertexShader,
       uniforms: {
-          uFrequency: { value: new Vector2(10, 5)}
+          uFrequency: { value: new Vector2(uFrequency.x, uFrequency.y)}
       }
     }),
-    []
+    [uFrequency]
   );
 
   return (
