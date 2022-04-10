@@ -39,11 +39,6 @@ const Plane = () => {
 
   const ref = useRef();
 
-  useEffect(() => {
-    ref.current.material.uniforms.uFrequency.value.x = uFrequency.x;
-    ref.current.material.uniforms.uFrequency.value.y = uFrequency.y;
-    ref.current.material.uniforms.uniformsNeedUpdate = true;
-  }, [uFrequency]);
 
   const data = useMemo(
     () => ({
