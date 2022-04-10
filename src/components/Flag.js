@@ -38,8 +38,8 @@ const fragmentShader = `
     }
 `;
 
-const Flag = () => {
-  const ukraineFlagTexture = useLoader(TextureLoader, '/ukraine-flag.jpg')
+const Flag = ({flag, ...props}) => {
+  const ukraineFlagTexture = useLoader(TextureLoader, flag)
   const { uFrequency } = useControls({ uFrequency: { x: 10, y: 5 } });
   const ref = useRef();
 
@@ -65,7 +65,7 @@ const Flag = () => {
   );
 
   return (
-    <mesh ref={ref} scale={[1, 2 / 3, 1]}>
+    <mesh ref={ref} scale={[1, 2 / 3, 1]} {...props}>
       <planeGeometry args={[1, 1, 32, 32]} />
       <shaderMaterial attach="material" {...data} />
     </mesh>

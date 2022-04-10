@@ -24,7 +24,8 @@ const Scene = () => {
       />
 
       <Suspense fallback={null}>
-        <Flag />
+        <Flag flag={'/brasil.png'} position={[0, 0.5, 0]}/>
+        <Flag flag={'/ukraine-flag.jpg'} position={[0, -0.5, 0]}/>
       </Suspense>
     </>
   );
