@@ -1,7 +1,7 @@
 import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
 import { useThree } from "@react-three/fiber";
 import React, { Suspense } from "react";
-import Flag from "./Flag";
+import Plane from "./Plane";
 
 const Scene = () => {
   const { size } = useThree();
@@ -24,8 +24,7 @@ const Scene = () => {
       />
 
       <Suspense fallback={null}>
-        <Flag flag={'/brasil.png'} position={[0, 0.5, 0]}/>
-        <Flag flag={'/ukraine-flag.jpg'} position={[0, -0.5, 0]}/>
+        <Plane />
       </Suspense>
     </>
   );
