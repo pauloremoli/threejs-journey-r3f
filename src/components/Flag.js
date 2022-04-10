@@ -1,34 +1,47 @@
-import { useFrame } from "@react-three/fiber";
+import { useFrame, useLoader } from "@react-three/fiber";
 import { useControls } from "leva";
 import { useEffect, useMemo, useRef } from "react";
+import { TextureLoader } from "three";
+import { Color } from "three";
 import { Vector2 } from "three";
 
 const vertexShader = `
-    uniform mat4 projectionMatrix;
-    uniform mat4 viewMatrix;
-    uniform mat4 modelMatrix;
-    attribute vec3 position;
     uniform vec2 uFrequency;
     uniform float uTime;
+    uniform vec3 uColor;
+
+    varying vec2 vUv;
+    varying float vElevation;
 
     void main() {
       vec4 modelPosition = modelMatrix * vec4(position, 1.0);
-      modelPosition.z += sin(modelPosition.x * uFrequency.x - uTime) * 0.1;
-      modelPosition.z += sin(modelPosition.y * uFrequency.y - uTime ) * 0.1;
+      float elevation = sin(modelPosition.x * uFrequency.x - uTime) * 0.1;
+      elevation += sin(modelPosition.y * uFrequency.y - uTime ) * 0.1;
+      modelPosition.z = elevation;
       gl_Position = projectionMatrix * viewMatrix * modelPosition;
+      vUv = uv;
+      vElevation = elevation;
     }
 `;
 
 const fragmentShader = `
-    precision mediump float;
+    uniform vec3 uColor;
+    uniform sampler2D uTexture;
     
+    varying vec2 vUv;
+    varying float vElevation;
+
     void main() {
-      gl_FragColor = vec4(1.0, 0, 0, 1.0);
+      vec4 textureColor = texture2D(uTexture, vUv);
+      textureColor.rgb *= vElevation * 2.0 + 0.9;
+      gl_FragColor = textureColor;
     }
 `;
 
-const Plane = () => {
+const Flag = () => {
+  const ukraineFlagTexture = useLoader(TextureLoader, '/ukraine-flag.jpg')
   const { uFrequency } = useControls({ uFrequency: { x: 10, y: 5 } });
+  const ref = useRef();
 
   useFrame(({ clock }) => {
     ref.current.material.uniforms.uTime.value = clock.getElapsedTime();
@@ -37,9 +50,6 @@ const Plane = () => {
     ref.current.material.uniforms.uniformsNeedUpdate = true;
   });
 
-  const ref = useRef();
-
-
   const data = useMemo(
     () => ({
       fragmentShader,
@@ -47,17 +57,19 @@ const Plane = () => {
       uniforms: {
         uFrequency: { value: new Vector2(uFrequency.x, uFrequency.y) },
         uTime: { value: 0 },
+        uColor: { value: new Color('orange')},
+        uTexture: {value: ukraineFlagTexture}
       },
     }),
     []
   );
 
   return (
-    <mesh ref={ref}>
+    <mesh ref={ref} scale={[1, 2 / 3, 1]}>
       <planeGeometry args={[1, 1, 32, 32]} />
-      <rawShaderMaterial attach="material" {...data} />
+      <shaderMaterial attach="material" {...data} />
     </mesh>
   );
 };
 
-export default Plane;
+export default Flag;
