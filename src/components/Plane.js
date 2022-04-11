@@ -218,14 +218,41 @@ const fragmentShader = `
 
 
       // pattern 32 - rotated bright star
-      vec2 rotatedUv = rotate(vUv, PI * 0.25, vec2(0.5));
-      vec2 lightUvX = vec2(rotatedUv.x * 0.1 + 0.45, rotatedUv.y * 0.5 + 0.25);
-      float strengthX =  0.015 / distance(lightUvX, vec2(0.5));
+      // vec2 rotatedUv = rotate(vUv, PI * 0.25, vec2(0.5));
+      // vec2 lightUvX = vec2(rotatedUv.x * 0.1 + 0.45, rotatedUv.y * 0.5 + 0.25);
+      // float strengthX =  0.015 / distance(lightUvX, vec2(0.5));
 
-      vec2 lightUvY = vec2(rotatedUv.y * 0.1 + 0.45, rotatedUv.x * 0.5 + 0.25);
-      float strengthY =  0.015 / distance(lightUvY, vec2(0.5));
+      // vec2 lightUvY = vec2(rotatedUv.y * 0.1 + 0.45, rotatedUv.x * 0.5 + 0.25);
+      // float strengthY =  0.015 / distance(lightUvY, vec2(0.5));
 
-      strength = strengthX * strengthY;
+      // strength = strengthX * strengthY;
+      // gl_FragColor = vec4(strength, strength, strength, 1);
+
+      // pattern 33 - black circle on white 
+      // strength =  step(0.25, length(vUv - 0.5));
+      // gl_FragColor = vec4(strength, strength, strength, 1);
+
+      // pattern 34 - black circle with gradient
+      // strength =  abs(distance(vUv, vec2(0.5)) - 0.25);
+      // gl_FragColor = vec4(strength, strength, strength, 1);
+      
+      // pattern 35 - thin circle 
+      // strength =  step(0.01, abs(length(vUv - 0.5) - 0.25));
+      // gl_FragColor = vec4(strength, strength, strength, 1);
+      
+      // pattern 36 - thin white circle 
+      // strength =  1. - step(0.01, abs(length(vUv - 0.5) - 0.25));
+      // gl_FragColor = vec4(strength, strength, strength, 1);
+
+      // pattern 37 - distorted white circle
+      // vec2 wavedUv = vec2(vUv.x, vUv.y + sin(vUv.x * 30. ) * 0.1);
+      // strength =  1. - step(0.01, abs(length(wavedUv - 0.5) - 0.25));
+      // gl_FragColor = vec4(strength, strength, strength, 1);
+
+
+      // pattern 38 - distorted white circle both axis
+      vec2 wavedUv = vec2(vUv.x + sin(vUv.y * 30.) * 0.1, vUv.y + sin(vUv.x * 30. ) * 0.1);
+      strength =  1. - step(0.01, abs(length(wavedUv - 0.5) - 0.25));
       gl_FragColor = vec4(strength, strength, strength, 1);
     }
 `;
