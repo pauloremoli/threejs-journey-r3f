@@ -1,5 +1,5 @@
-Shaders using React Three Fiber
+ThreeJS Journey - Lesson 28 - Shaders patterns
 
-ThreeJS Journey - Lesson 27 - Shaders
+50 shaders patterns 
 
-![Flags](https://i.ibb.co/ChhShWN/Animation.gif)
+![Shadeers Patterns](https://i.ibb.co/PYPQLLT/shaders-patterns.png)
