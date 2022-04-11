@@ -36,6 +36,53 @@ const fragmentShader = `
         );
     }
 
+    //	Classic Perlin 3D Noise 
+    //	by Stefan Gustavson
+    //
+    vec2 fade(vec2 t) {
+        return t*t*t*(t*(t*6.0-15.0)+10.0);
+    }
+
+    vec4 permute(vec4 x)
+    {
+        return mod(((x*34.0)+1.0)*x, 289.0);
+    }
+
+    float cnoise(vec2 P){
+        vec4 Pi = floor(P.xyxy) + vec4(0.0, 0.0, 1.0, 1.0);
+        vec4 Pf = fract(P.xyxy) - vec4(0.0, 0.0, 1.0, 1.0);
+        Pi = mod(Pi, 289.0); // To avoid truncation effects in permutation
+        vec4 ix = Pi.xzxz;
+        vec4 iy = Pi.yyww;
+        vec4 fx = Pf.xzxz;
+        vec4 fy = Pf.yyww;
+        vec4 i = permute(permute(ix) + iy);
+        vec4 gx = 2.0 * fract(i * 0.0243902439) - 1.0; // 1/41 = 0.024...
+        vec4 gy = abs(gx) - 0.5;
+        vec4 tx = floor(gx + 0.5);
+        gx = gx - tx;
+        vec2 g00 = vec2(gx.x,gy.x);
+        vec2 g10 = vec2(gx.y,gy.y);
+        vec2 g01 = vec2(gx.z,gy.z);
+        vec2 g11 = vec2(gx.w,gy.w);
+        vec4 norm = 1.79284291400159 - 0.85373472095314 * 
+          vec4(dot(g00, g00), dot(g01, g01), dot(g10, g10), dot(g11, g11));
+        g00 *= norm.x;
+        g01 *= norm.y;
+        g10 *= norm.z;
+        g11 *= norm.w;
+        float n00 = dot(g00, vec2(fx.x, fy.x));
+        float n10 = dot(g10, vec2(fx.y, fy.y));
+        float n01 = dot(g01, vec2(fx.z, fy.z));
+        float n11 = dot(g11, vec2(fx.w, fy.w));
+        vec2 fade_xy = fade(Pf.xy);
+        vec2 n_x = mix(vec2(n00, n01), vec2(n10, n11), fade_xy.x);
+        float n_xy = mix(n_x.x, n_x.y, fade_xy.y);
+        return 2.3 * n_xy;
+    }
+
+    //	end Classic Perlin 3D Noise 
+
     void main() {
       
       float strength = vUv.x;
@@ -251,9 +298,89 @@ const fragmentShader = `
 
 
       // pattern 38 - distorted white circle both axis
-      vec2 wavedUv = vec2(vUv.x + sin(vUv.y * 30.) * 0.1, vUv.y + sin(vUv.x * 30. ) * 0.1);
-      strength =  1. - step(0.01, abs(length(wavedUv - 0.5) - 0.25));
-      gl_FragColor = vec4(strength, strength, strength, 1);
+      // vec2 wavedUv = vec2(vUv.x + sin(vUv.y * 30.) * 0.1, vUv.y + sin(vUv.x * 30. ) * 0.1);
+      // strength =  1. - step(0.01, abs(length(wavedUv - 0.5) - 0.25));
+      // gl_FragColor = vec4(strength, strength, strength, 1);
+
+
+      // pattern 39 - distorted white circle both axis
+      // vec2 wavedUv = vec2(vUv.x + sin(vUv.y * 100.) * 0.1, vUv.y + sin(vUv.x * 100. ) * 0.1);
+      // strength =  1. - step(0.01, abs(length(wavedUv - 0.5) - 0.25));
+      // gl_FragColor = vec4(strength, strength, strength, 1);
+
+      
+      // pattern 40 - gradiant with an angle
+      // strength = atan(vUv.x, vUv.y);
+      // gl_FragColor = vec4(strength, strength, strength, 1);
+
+      
+      // pattern 41 - gradiant with an angle from center
+      // strength = atan(vUv.x -.5, vUv.y - 0.5);
+      // gl_FragColor = vec4(strength, strength, strength, 1);
+
+      
+      // pattern 42 - 360 gradiant from center
+      // strength = atan(vUv.x -.5, vUv.y - 0.5);
+      // strength /= PI * 2.;
+      // strength += 0.5;
+      // gl_FragColor = vec4(strength, strength, strength, 1);
+
+      
+      // pattern 43 - 360 gradiant from center with 20 slices
+      // strength = atan(vUv.x -.5, vUv.y - 0.5);
+      // strength /= PI * 2.;
+      // strength += 0.5;
+      // strength = mod(strength * 20., 1.);
+      // gl_FragColor = vec4(strength, strength, strength, 1);
+      
+      // pattern 44 - 20 slices from center black/white
+      // strength = atan(vUv.x -.5, vUv.y - 0.5);
+      // strength /= PI * 2.;
+      // strength += 0.5;
+      // strength = sin(strength * 100.);
+      // gl_FragColor = vec4(strength, strength, strength, 1);
+
+      
+      // pattern 45 - thin circle with sinusoid
+      // float angle = atan(vUv.x -.5, vUv.y - 0.5);
+      // angle /= PI * 2.;
+      // angle += 0.5;
+      // float sinusoid = sin(angle * 100.);
+      
+      // float radius = 0.25 + sinusoid * 0.02;
+      // strength =  1. - step(0.01, abs(length(vUv - 0.5) - radius));
+      // gl_FragColor = vec4(strength, strength, strength, 1);
+
+      // pattern 46 - perlin noise
+      // strength = cnoise(vUv * 10.);
+      // gl_FragColor = vec4(strength, strength, strength, 1);
+
+      // pattern 47 - perlin noise black/white
+      // strength = step(0., cnoise(vUv * 10.));
+      // gl_FragColor = vec4(strength, strength, strength, 1);
+
+      // pattern 48 - perlin noise white
+      // strength = 1. - abs(cnoise(vUv * 10.));
+      // gl_FragColor = vec4(strength, strength, strength, 1);
+
+      
+      // pattern 49 - perlin noise with sin
+      // strength = sin(cnoise(vUv * 10.) * 20.);
+      // gl_FragColor = vec4(strength, strength, strength, 1);
+
+      
+      // pattern 50 - perlin noise with sin and step
+      // strength = step(0.9, sin(cnoise(vUv * 10.) * 20.));
+      // gl_FragColor = vec4(strength, strength, strength, 1);
+
+      
+      // pattern 50 - mixing color with the shapes
+      strength = step(0.9, sin(cnoise(vUv * 10.) * 20.));
+      strength = clamp(strength, 0., 1.);
+      vec3 blackColor = vec3(0.);
+      vec3 uvColor = vec3(vUv, 0.2);
+      vec3 mixedColor = mix(blackColor, uvColor, strength);
+      gl_FragColor = vec4(mixedColor, 1);
     }
 `;
 
